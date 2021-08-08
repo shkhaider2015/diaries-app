@@ -4,8 +4,7 @@ import { Home } from './Componets/Home';
 function App() {
   return <div>
     <BrowserRouter>
-    <Home />
-    
+      <Home />
     </BrowserRouter>
 
   </div>

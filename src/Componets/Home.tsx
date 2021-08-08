@@ -38,6 +38,8 @@ export const Home = () =>
     return <div>
         {/* Navbar render */}
         {navbar()}
+        <div className="container" >
         <RouteComp />
+        </div>
     </div>
 }

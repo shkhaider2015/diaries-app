@@ -1,13 +1,13 @@
 import { combineReducers } from "redux";
-import { AuthAction, AuthState, HardcodeString, User } from "./Types";
+import { AuthAction, AuthState, HardcodeString, LogoutAction, User } from "./Types";
 
 export const initialAuthState:AuthState = {
-    loading : true,
+    loading : false,
     error : null,
     data : null
 }
 
-export const AuthReducer = (state:AuthState=initialAuthState, action:AuthAction) => {
+export const SignupReducer = (state:AuthState=initialAuthState, action:AuthAction) => {
     switch(action.type)
     {
         case HardcodeString.REQUEST:
@@ -35,8 +35,43 @@ export const AuthReducer = (state:AuthState=initialAuthState, action:AuthAction)
             return state;
     }
 }
+export const LoginReducer = (state:AuthState=initialAuthState, action:AuthAction | LogoutAction) => {
+    switch(action.type)
+    {
+        case HardcodeString.REQUEST:
+            state = {
+                loading : true,
+                error : null,
+                data : null
+            }
+            return state
+        case HardcodeString.SUCCESS:
+            state = {
+                loading : false,
+                error : null,
+                data : action.payload
+            }
+            return state;
+        case HardcodeString.FAILURE:
+            state = {
+                loading : false,
+                error : action.payload,
+                data : null
+            }
+            return state
+        case HardcodeString.LOGOUT:
+            state = {
+                ...state,
+                data : null
+            }
+            return state
+        default:
+            return state;
+    }
+}
 
 
 export const Reducers = combineReducers({
-    AuthReducer : AuthReducer
+    SignupReducer : SignupReducer,
+    LoginReducer
 })

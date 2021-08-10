@@ -1,10 +1,17 @@
-import { Request } from "miragejs";
+import { Request, Response } from "miragejs";
 
 export const LoginRoute = (schema:any, request:Request)  => {
     const req = JSON.parse(request.requestBody);
     const email = req.email
 
-    return schema.users.findBy({email : email});
+    const user = schema.users.findBy({email : email});
+
+    if(!user)
+    {
+        return new Response(400)
+    }
+
+    return user;
 }
 
 export const SignupRoute = (schema:any, request:Request) => {

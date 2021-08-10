@@ -1,12 +1,15 @@
+import { Reducers } from "./Reducers"
+
 export enum HardcodeString {
     REQUEST = "request",
     SUCCESS = "success",
-    FAILURE = "failure"
+    FAILURE = "failure",
+    LOGOUT = "logout"
 }
 
 export interface User {
-    id: string;
-    username: string;
+    id?: string;
+    username?: string;
     email: string;
     password: string;
     diaryIds?: string[] | null;
@@ -38,5 +41,10 @@ interface FailureAction{
     type : HardcodeString.FAILURE
     payload : string
 }
+export interface LogoutAction {
+    type : HardcodeString.LOGOUT
+}
 
 export type AuthAction = RequestAction | SuccessAction | FailureAction
+
+export type IStateType = ReturnType<typeof Reducers> 

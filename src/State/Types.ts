@@ -1,10 +1,15 @@
 import { Reducers } from "./Reducers"
 
 export enum HardcodeString {
-    REQUEST = "request",
-    SUCCESS = "success",
-    FAILURE = "failure",
-    LOGOUT = "logout"
+    REQUEST = "login-request",
+    SUCCESS = "login-success",
+    FAILURE = "login-failure",
+    LOGOUT = "login-logout"
+}
+export enum SignupStrings {
+    REQUEST = "signup-request",
+    SUCCESS = "signup-success",
+    FAILURE = "signup-failure",
 }
 
 export interface User {
@@ -31,14 +36,14 @@ export interface AuthState {
 } 
 
 interface RequestAction {
-    type : HardcodeString.REQUEST
+    type : HardcodeString.REQUEST | SignupStrings.REQUEST
 }
 interface SuccessAction {
-    type : HardcodeString.SUCCESS
+    type : HardcodeString.SUCCESS | SignupStrings.SUCCESS
     payload : User
 }
 interface FailureAction{
-    type : HardcodeString.FAILURE
+    type : HardcodeString.FAILURE | SignupStrings.FAILURE
     payload : string
 }
 export interface LogoutAction {

@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { IStateType } from "../State/Types";
 import { useAction } from "../State/useActions";
 
 export const LoginComp = () => {
 
     const { Login } = useAction();
+    const navigate = useNavigate();
     const loginState = useSelector((state:IStateType) => state.LoginReducer)
     const [isCall, setIsCall] = useState(false);
 
@@ -17,18 +19,17 @@ export const LoginComp = () => {
         const password = e.target.password.value;
 
         Login({email, password})
-        // fetch("/api/login", {
-        //     method : "POST",
-        //     body : JSON.stringify({
-        //         email : "shkhaider2015",
-        //         password : "123456"
-        //     })
-        // })
-        // .then(res => res.json())
-        // .then(json => console.log("Json Response : ", json))
-        // .catch(err => console.log("error response : ", err))
-        
     }
+
+    useEffect(
+        () => {
+            if(loginState.data)
+            {
+                navigate("/")
+            }
+            //eslint-disable-next-line
+        }, [loginState.data]
+    )
     if(loginState.loading)
     {
         return <div style={{ height: '90vh', display: 'grid', placeItems: 'center' }} >

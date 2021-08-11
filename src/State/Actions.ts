@@ -1,39 +1,33 @@
 import axios from "axios"
-import { HardcodeString, User } from "./Types";
+import { Dispatch } from "redux";
+import { AuthAction, HardcodeString, LogoutAction, SignupStrings, User } from "./Types";
 
 
-export const Login = (user: User, login:boolean=true) => {
-    
-    if(!login)
-    {
-        return async (dispatch:any) => {
+export const Login = (user: User, login: boolean = true) => {
+
+    if (!login) {
+        return async (dispatch: Dispatch<LogoutAction>) => {
             return dispatch({
-                type : HardcodeString.LOGOUT
+                type: HardcodeString.LOGOUT
             })
-        } 
+        }
     }
-    
-    return async (dispatch: any) => {
+
+    return async (dispatch: Dispatch<AuthAction>) => {
         dispatch({
             type: HardcodeString.REQUEST,
         })
-        const response = await axios.post("/api/login", {
-            method: "POST",
-            body: JSON.stringify({
-                email: user.email,
-                password: user.password
-            })
-        });
 
-        if(response.status === 400)
-        {
-            return dispatch({
-                type: HardcodeString.FAILURE,
-                payload: "User Not find"
-            })
-        }
+        try {
+            const response = await axios.post("/api/login", {
+                method: "POST",
+                body: JSON.stringify({
+                    email: user.email,
+                    password: user.password
+                })
+            });
 
-        const jsonData = await response.data
+            const jsonData = await response.data
         const userJson = await JSON.parse(jsonData.user.body)
 
         console.log("login response status ", response.status)
@@ -42,38 +36,50 @@ export const Login = (user: User, login:boolean=true) => {
             type: HardcodeString.SUCCESS,
             payload: userJson
         })
+    
+        } catch (error) {
+            return dispatch({
+                type: HardcodeString.FAILURE,
+                payload: "User Not find"
+            })
+        }
 
     }
 }
 
 export const Signup = (user: User) => {
-    return async (dispatch: any) => {
+    return async (dispatch: Dispatch<AuthAction>) => {
         dispatch({
-            type: HardcodeString.REQUEST,
+            type: SignupStrings.REQUEST,
         })
-        const response = await axios.post("/api/signup", {
-            method: "POST",
-            body: JSON.stringify({
-                username: user.username,
-                email: user.email,
-                password: user.password
+
+        try {
+            const response = await axios.post("/api/signup", {
+                method: "POST",
+                body: JSON.stringify({
+                    username: user.username,
+                    email: user.email,
+                    password: user.password
+                })
             })
-        })
 
-        const jsonData = await response.data 
+            const resData = await response.data;
+            const jsonData = await JSON.parse(resData.user.body);
 
-        if (response.status > 200 && response.status < 300) {
+
+
             return dispatch({
-                type: HardcodeString.SUCCESS,
-                payload: jsonData.user.body
+                type: SignupStrings.SUCCESS,
+                payload: jsonData
             })
 
-        }
+        } catch (error) {
 
-        return dispatch({
-            type: HardcodeString.FAILURE,
-            payload: response.data
-        })
+            return dispatch({
+                type: SignupStrings.FAILURE,
+                payload: "User Already exist"
+            })
+        }
 
     }
 }

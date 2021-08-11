@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 import { IStateType, User } from "../State/Types";
 import { useAction } from "../State/useActions";
 
 export const SignupComp = () => {
 
     const { Signup } = useAction()
-    const navigate = useNavigate();
     const signupState = useSelector((state:IStateType) => state.SignupReducer);
     const [isCall, setIsCall] = useState(false);
 
@@ -28,30 +26,10 @@ export const SignupComp = () => {
         
 
         Signup(user)
-        // fetch("/api/signup", {
-        //     method : "POST",
-        //     body : JSON.stringify({
-        //         username : "shakeel_haider",
-        //         email : "shkhaider2015",
-        //         password : "123456"
-        //     })
-        // })
-        // .then(res => res.json())
-        // .then(json => console.log("Json Response : ", json))
-        // .catch(err => console.log("error response : ", err))
 
     }
 
-    useEffect(
-        () => {
-            if(signupState.data)
-            {
-                navigate("/login")
-                console.log("UseEffect True")
-            }
-            //eslint-disable-next-line
-        }, [signupState.data]
-    )
+    console.log("Signup state loading : ", signupState.loading)
 
     if(signupState.loading)
     {
@@ -65,6 +43,11 @@ export const SignupComp = () => {
         <div className="card p-5 shadow col-lg-6 col-md-8 col-sm-10 col-10" >
             <form className="text-center" onSubmit={(e) => handleSubmit(e)} >
                 <legend>Signup</legend>
+                {
+                    signupState.data
+                    ? <span style={{ fontSize : '10px' }} > <span style={{ color : 'green' }} >Successfully</span> signeup as {signupState.data?.email} </span>
+                    : signupState.error ? <span style={{ fontSize : '10px', color : 'red' }} >{signupState.error}</span> : ""
+                }
                 {console.log("Signup data ", signupState.data)}
                     <input className="w-100 p-2 mt-3 rounded border border-light shadow-sm " name="username" title="username" placeholder="Username" type="text" required />
                 

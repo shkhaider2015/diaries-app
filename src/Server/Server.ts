@@ -1,40 +1,54 @@
 import { belongsTo, createServer, Factory, hasMany, Model } from "miragejs";
 import { AllUsers, LoginRoute, SignupRoute } from "./Routes";
 
-export const MirageServer = () => 
-{
-    createServer({
+export const MirageServer = () => {
+  createServer({
 
-        models : {
-            entry: Model.extend({
-                diary: belongsTo(),
-              }),
-              diary: Model.extend({
-                entry: hasMany(),
-                user: belongsTo(),
-              }),
-              user: Model.extend({
-                diary: hasMany(),
-              }),
-        },
+    models: {
+      entry: Model.extend({
+        diary: belongsTo(),
+      }),
+      diary: Model.extend({
+        entry: hasMany(),
+        user: belongsTo(),
+      }),
+      user: Model.extend({
+        diary: hasMany(),
+      }),
+    },
 
-        factories: {
-            user: Factory.extend({
-              username: 'test',
-              password: 'password',
-              email: 'test@email.com',
-        }),
+    factories: {
+      user: Factory.extend({
+        username: 'test',
+        password: 'password',
+        email: 'test@email.com',
+      }),
+      entry : Factory.extend({
+        title : "empty",
+        desc : "empty",
+        date : Date.now()
+      }),
+      diary : Factory.extend({
+        access : 'public',
+        createdAt : '',
+        updatedAt : '',
+      })
     },
 
     seeds: (server): any => {
-        server.create('user', { username : 'test1', email : 'test1@email.com', password : 'password1' });
-      },
+      const entry1 = server.create("entry", { title : "test Title", desc : "test Description", date : Date.now() })
+      const diary1 = server.create("diary", { entry : [entry1], access : 'public', createdAt : Date.now().toString(),  })
 
-        routes(): void {
-            this.post("/api/signup", SignupRoute)
-            this.post("/api/login", LoginRoute)
-            this.get("/api/users", AllUsers)
-        }
 
-    })
+     server.create("user", { diary : [ diary1 ], username : 'shakeel', password : 'bbg', email : 'shk@test.com' },   )
+      
+    },
+
+    routes(): void {
+      this.post("/api/signup", SignupRoute)
+      this.post("/api/login", LoginRoute)
+      this.get("/api/users", AllUsers)
+    }
+
+  })
 }

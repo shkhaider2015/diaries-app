@@ -21,7 +21,7 @@ export const DiaryCard1: FC = () => {
 export const DiaryCard: FC = () => {
 
 
-    return <div style={{ width : '18rem', height : '10rem' }} className="shadow p-3 mt-3" >
+    return <div style={{ width : '13rem', height : '10rem' }} className="shadow p-2 mt-3 rounded" >
         <div className="d-flex flex-direction-row justify-content-between border" >
             <p>Title</p> <p>icon</p>
         </div>

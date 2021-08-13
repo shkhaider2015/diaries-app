@@ -28,13 +28,12 @@ export const Login = (user: User, login: boolean = true) => {
             });
 
             const jsonData = await response.data
-        const userJson = await JSON.parse(jsonData.user.body)
 
         console.log("login response status ", response.status)
 
         return dispatch({
             type: HardcodeString.SUCCESS,
-            payload: userJson
+            payload: jsonData
         })
     
         } catch (error) {
@@ -64,13 +63,10 @@ export const Signup = (user: User) => {
             })
 
             const resData = await response.data;
-            const jsonData = await JSON.parse(resData.user.body);
-
-
 
             return dispatch({
                 type: SignupStrings.SUCCESS,
-                payload: jsonData
+                payload: resData
             })
 
         } catch (error) {

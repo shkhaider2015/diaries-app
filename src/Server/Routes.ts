@@ -2,9 +2,10 @@ import { Request, Response } from "miragejs";
 
 export const LoginRoute = (schema:any, request:Request)  => {
     const req = JSON.parse(request.requestBody);
-    const email = req.email
-    console.log("Login Request : ", req)
+    const body = JSON.parse(req.body);
+    const email = body.email
     const user = schema.users.findBy({email : email});
+    console.log("Login Request : ", user)
 
     if(!user)
     {
@@ -16,7 +17,8 @@ export const LoginRoute = (schema:any, request:Request)  => {
 
 export const SignupRoute = (schema:any, request:Request) => {
     const attrs = JSON.parse(request.requestBody);
-    const email = attrs.email
+    const body = JSON.parse(attrs.body);
+    const email = body.email
 
     const user = schema.users.findBy({email : email})
 
@@ -26,10 +28,21 @@ export const SignupRoute = (schema:any, request:Request) => {
         return new Response(401)
     }
 
-    return schema.users.create(attrs)
+    console.log("attrs : ", body)
+    return schema.users.create(body)
 }
 
 export const AllUsers = (schema:any) => 
 {
     return schema.users.all()
+}
+
+export const GETUSERDIARIES = (schema:any, request:any) => {
+    const username = request.params.username;
+    const user = schema.users.findBy({username : username});
+
+    console.log("Backend --> username --> : ", request.params.username)
+    console.log("Backend --> User --> : ", user)
+
+    return user.diary;
 }

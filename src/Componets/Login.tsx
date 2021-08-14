@@ -25,7 +25,7 @@ export const LoginComp = () => {
         () => {
             if(loginState.data)
             {
-                navigate("/")
+                navigate("/home")
             }
             //eslint-disable-next-line
         }, [loginState.data]

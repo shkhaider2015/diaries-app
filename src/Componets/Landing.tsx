@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux";
-import { Route, Routes, useNavigate } from "react-router-dom";
+import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
 import { IStateType } from "../State/Types";
 import { AllDiaries } from "./Diary/AllDiaries";
 import { DiaryCard } from "./Diary/DiaryCard"
@@ -45,10 +45,7 @@ export const Landing = () => {
             </div>
         </div> */}
         <div className="col-10">
-            <Routes>
-                <Route path="/" element={<AllDiaries />} />
-                <Route path="/:id" element={<AllDiaries />} />
-            </Routes>
+            <Outlet />
         </div>
     </div>
 

@@ -48,6 +48,7 @@ export const MirageServer = () => {
       this.post("/api/signup", SignupRoute)
       this.post("/api/login", LoginRoute)
       this.get("/api/users", AllUsers)
+      this.get("/api/diaries", )
       this.get("/api/user/:username/diaries", GETUSERDIARIES)
 
     }

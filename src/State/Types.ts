@@ -11,6 +11,11 @@ export enum SignupStrings {
     SUCCESS = "signup-success",
     FAILURE = "signup-failure",
 }
+export enum DataStrings {
+    REQUEST = "data-request" , 
+    SUCCESS = "data-success", 
+    FAILURE = "data-failure"
+}
 
 export interface User {
     id?: string;
@@ -53,3 +58,17 @@ export interface LogoutAction {
 export type AuthAction = RequestAction | SuccessAction | FailureAction
 
 export type IStateType = ReturnType<typeof Reducers> 
+
+interface IDataRequest {
+    type : DataStrings.REQUEST
+}
+interface IDataSuccess {
+    type : DataStrings.SUCCESS
+    payload : any
+}
+interface IDataFailure {
+    type : DataStrings.FAILURE
+    payload : string
+}
+
+export type DataReducerAction = IDataSuccess | IDataRequest | IDataFailure

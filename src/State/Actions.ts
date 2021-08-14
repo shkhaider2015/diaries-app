@@ -80,3 +80,7 @@ export const Signup = (user: User) => {
     }
 }
 
+export const GetData = (user: User | null = null) => {
+    const URL = "/api/users"
+}
+

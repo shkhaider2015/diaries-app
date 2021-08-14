@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import { AuthAction, AuthState, HardcodeString, LogoutAction, SignupStrings } from "./Types";
+import { AuthAction, AuthState, DataReducerAction, HardcodeString, LogoutAction, SignupStrings, DataStrings } from "./Types";
 
 export const initialAuthState:AuthState = {
     loading : false,
@@ -70,8 +70,37 @@ export const LoginReducer = (state:AuthState=initialAuthState, action:AuthAction
     }
 }
 
+export const DataReducer = (state:AuthState=initialAuthState, action:DataReducerAction) => {
+    switch (action.type) {
+        case DataStrings.REQUEST:
+            state = {
+                loading : true,
+                error : null,
+                data : null
+            }
+            return state;
+        case DataStrings.SUCCESS:
+            state = {
+                loading : false,
+                error : null,
+                data : action.payload
+            }
+            return state;
+        case DataStrings.FAILURE:
+            state = {
+                loading : false,
+                error : action.payload,
+                data : null
+            }
+            break;
+        default:
+            return state;
+    }
+}
+
 
 export const Reducers = combineReducers({
     SignupReducer : SignupReducer,
-    LoginReducer
+    LoginReducer,
+    DataReducer
 })

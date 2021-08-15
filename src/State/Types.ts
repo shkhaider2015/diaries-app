@@ -4,7 +4,7 @@ export enum HardcodeString {
     REQUEST = "login-request",
     SUCCESS = "login-success",
     FAILURE = "login-failure",
-    LOGOUT = "login-logout"
+    LOGOUT = "login-logout",
 }
 export enum SignupStrings {
     REQUEST = "signup-request",
@@ -14,7 +14,7 @@ export enum SignupStrings {
 export enum DataStrings {
     REQUEST = "data-request" , 
     SUCCESS = "data-success", 
-    FAILURE = "data-failure"
+    FAILURE = "data-failure",
 }
 
 export interface User {
@@ -30,7 +30,7 @@ export interface Diary {
     access: 'private' | 'public';
     createdAt?: string;
     updatedAt?: string;
-    userId: string;
+    userId?: string;
     entryIds?: string[] | null;
 }
 
@@ -39,6 +39,11 @@ export interface AuthState {
     error : string | null
     data : User | null
 } 
+export interface IDiaries {
+    loading : boolean
+    error : string | null
+    data : Diary | null | { diaries : Diary[] }
+}
 
 interface RequestAction {
     type : HardcodeString.REQUEST | SignupStrings.REQUEST

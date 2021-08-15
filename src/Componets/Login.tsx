@@ -30,6 +30,16 @@ export const LoginComp = () => {
             //eslint-disable-next-line
         }, [loginState.data]
     )
+
+    // useEffect(
+    //     () => {
+    //         fetch("/api/diaries")
+    //         .then(res => res.json())
+    //         .then(json => console.log("Diaries : ", json))
+    //         .catch(err => console.log("Diary Error : ", err))
+    //     }, []
+    // )
+    
     if(loginState.loading)
     {
         return <div style={{ height: '90vh', display: 'grid', placeItems: 'center' }} >

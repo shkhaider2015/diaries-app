@@ -46,3 +46,7 @@ export const GETUSERDIARIES = (schema:any, request:any) => {
 
     return user.diary;
 }
+
+export const GETALLDIARIES = (schema:any, request:any) => {
+    return schema.diaries.all()
+}

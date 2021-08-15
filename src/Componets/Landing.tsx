@@ -12,18 +12,18 @@ export const Landing = () => {
     const [userName, setUserName] = useState(null);
 
 
-    useEffect(
-        () => {
-            const FETCH = async (x: any) => {
-                const response = await axios.get(`/api/user/${x.user.username}/diaries`);
-                const data = await response.data;
+    // useEffect(
+    //     () => {
+    //         const FETCH = async (x: any) => {
+    //             const response = await axios.get(`/api/user/${x.user.username}/diaries`);
+    //             const data = await response.data;
 
-                console.log("Frontend user diaries : ", data)
-            }
-            FETCH(user.data)
-            //eslint-disable-next-line
-        }, []
-    )
+    //             console.log("Frontend user diaries : ", data)
+    //         }
+    //         FETCH(user.data)
+    //         //eslint-disable-next-line
+    //     }, []
+    // )
 
     return <div className="row" >
         <div className="col-2 border" >

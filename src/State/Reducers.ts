@@ -1,13 +1,19 @@
 import { combineReducers } from "redux";
-import { AuthAction, AuthState, DataReducerAction, HardcodeString, LogoutAction, SignupStrings, DataStrings } from "./Types";
+import { AuthAction, AuthState, DataReducerAction, HardcodeString, LogoutAction, SignupStrings, DataStrings, IDiaries } from "./Types";
 
 export const initialAuthState:AuthState = {
     loading : false,
     error : null,
     data : null
 }
+export const initialDiariesState: IDiaries = {
+    loading : false,
+    error : null,
+    data : null
+}
 
 export const SignupReducer = (state:AuthState=initialAuthState, action:AuthAction) => {
+    console.log("Signup Reducer Call", action.type)
     switch(action.type)
     {
         case SignupStrings.REQUEST:
@@ -36,6 +42,7 @@ export const SignupReducer = (state:AuthState=initialAuthState, action:AuthActio
     }
 }
 export const LoginReducer = (state:AuthState=initialAuthState, action:AuthAction | LogoutAction) => {
+    console.log("Login Reducer Call", action.type)
     switch(action.type)
     {
         case HardcodeString.REQUEST:
@@ -70,7 +77,8 @@ export const LoginReducer = (state:AuthState=initialAuthState, action:AuthAction
     }
 }
 
-export const DataReducer = (state:AuthState=initialAuthState, action:DataReducerAction) => {
+export const DataReducer = (state:IDiaries=initialDiariesState, action:DataReducerAction) => {
+    console.log("Data Reducer Call", action.type)
     switch (action.type) {
         case DataStrings.REQUEST:
             state = {
@@ -92,7 +100,7 @@ export const DataReducer = (state:AuthState=initialAuthState, action:DataReducer
                 error : action.payload,
                 data : null
             }
-            break;
+            return state;
         default:
             return state;
     }
@@ -102,5 +110,5 @@ export const DataReducer = (state:AuthState=initialAuthState, action:DataReducer
 export const Reducers = combineReducers({
     SignupReducer : SignupReducer,
     LoginReducer,
-    DataReducer
+    Diaries : DataReducer
 })

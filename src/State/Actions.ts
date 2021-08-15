@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Dispatch } from "redux";
-import { AuthAction, HardcodeString, LogoutAction, SignupStrings, User } from "./Types";
+import { AuthAction, DataReducerAction, DataStrings, HardcodeString, LogoutAction, SignupStrings, User } from "./Types";
 
 
 export const Login = (user: User, login: boolean = true) => {
@@ -81,6 +81,29 @@ export const Signup = (user: User) => {
 }
 
 export const GetData = (user: User | null = null) => {
-    const URL = "/api/users"
+
+    return async (dispatch:Dispatch<DataReducerAction>) => {
+            dispatch({
+                type : DataStrings.REQUEST
+            })
+
+            try {
+                const response = await axios.get(user ? "/api/users" : "/api/diaries" );
+                const resData = await response.data;
+
+                console.log("Diary action call ", resData)
+
+                return dispatch({
+                    type : DataStrings.SUCCESS,
+                    payload : resData
+                })
+                
+            } catch (error) {
+                return dispatch({
+                    type : DataStrings.FAILURE,
+                    payload : "Cant find diaries"
+                })
+            }
+    }
 }
 

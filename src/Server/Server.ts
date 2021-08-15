@@ -1,5 +1,5 @@
 import { belongsTo, createServer, Factory, hasMany, Model } from "miragejs";
-import { AllUsers, GETUSERDIARIES, LoginRoute, SignupRoute } from "./Routes";
+import { AllUsers, GETALLDIARIES, GETUSERDIARIES, LoginRoute, SignupRoute } from "./Routes";
 
 export const MirageServer = () => {
   createServer({
@@ -48,7 +48,7 @@ export const MirageServer = () => {
       this.post("/api/signup", SignupRoute)
       this.post("/api/login", LoginRoute)
       this.get("/api/users", AllUsers)
-      this.get("/api/diaries", )
+      this.get("/api/diaries", GETALLDIARIES )
       this.get("/api/user/:username/diaries", GETUSERDIARIES)
 
     }

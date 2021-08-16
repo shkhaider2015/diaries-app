@@ -1,15 +1,15 @@
-import axios from "axios"
 import { useEffect, useState } from "react"
 import { useSelector } from "react-redux";
-import { Outlet, Route, Routes, useNavigate } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { IStateType } from "../State/Types";
-import { AllDiaries } from "./Diary/AllDiaries";
-import { DiaryCard } from "./Diary/DiaryCard"
+import { useAction } from "../State/useActions";
 
 export const Landing = () => {
     const user = useSelector((state: IStateType) => state.LoginReducer);
     const navigate = useNavigate();
+    const { GetData } = useAction();
     const [userName, setUserName] = useState(null);
+    const diaries = useSelector((state:IStateType) => state.Diaries);
 
 
     // useEffect(
@@ -25,12 +25,35 @@ export const Landing = () => {
     //     }, []
     // )
 
+    useEffect(
+        () => {
+            GetData()
+        }, []
+    )
+
+    const waitComp = (loading:boolean=false, error:string='') => <div style={{ height : '90vh', display :'grid', placeItems : 'center' }} > { loading ? "...Loading" : error } </div>
+
     return <div className="row" >
         <div className="col-2 border" >
+            {/* {
+                diaries.loading
+                ? waitComp(true)
+                : null
+            }
+            {
+                 diaries.error
+                 ? waitComp(false,diaries.error)
+                 : null
+            } */}
+            {
+                diaries.data
+                ? diaries.data.diaries ? diaries.data.diaries.map((item:any, index:number) => <div key={index} > <span> {item.title} </span> </div> ) : <span>No Diaries</span>
+                : diaries.loading ? waitComp(true, '') : waitComp(false, 'Error Fetching data')
+            }
             {
                 [0, 1, 2, 3, 4]
                     .map(
-                        (object: number, index: number) => <div> <span> Diary </span> </div>
+                        (object: number, index: number) => <div key={index} > <span> Diary </span> </div>
                     )
             }
         </div>

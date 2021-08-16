@@ -1,22 +1,19 @@
 import { FC, useEffect, useState } from "react"
 import { useSelector } from "react-redux"
 import { IStateType } from "../../State/Types"
-import { useAction } from "../../State/useActions";
+// import { useAction } from "../../State/useActions";
 import { DiaryCard } from "./DiaryCard";
 
 export const AllDiaries: FC = () => {
     const diaries = useSelector((state: IStateType) => state.Diaries);
-    const [data , setData] = useState([]);
-    const { GetData } = useAction();
+    // const [data , setData] = useState([]);
+    // const { GetData } = useAction();
 
-    useEffect(
-        () => {
-            GetData()
-            if(diaries.data)
-            {
-            }
-        },[diaries.data]
-    )
+    // useEffect(
+    //     () => {
+    //         GetData();
+    //     },[]
+    // )
 
     if (diaries?.loading) {
         <div style={{ height: '90vh', display: 'grid', placeItems: 'center' }} >
@@ -36,7 +33,9 @@ export const AllDiaries: FC = () => {
         <div className="col-10" >
             <div className="row" >
                 {
-                    
+                    diaries.data.diaries.map(
+                        (object:any, index:number) => <div key={index} className="col-4" > <DiaryCard /> </div>
+                    )
                 }
                 <h1>gggg</h1>
             </div>

@@ -37,7 +37,7 @@ export const MirageServer = () => {
 
     seeds: (server): any => {
       const entry1 = server.create("entry", { title : "test Title", desc : "test Description", date : Date.now() })
-      const diary1 = server.create("diary", { entry : [entry1], access : 'public', createdAt : Date.now().toString(),  })
+      const diary1 = server.create("diary", { title : 'test diary', entry : [entry1], access : 'public', createdAt : Date.now().toString(),  })
 
 
      server.create("user", { diary : [ diary1 ], username : 'shakeel', password : 'bbg', email : 'shk@test.com' },   )

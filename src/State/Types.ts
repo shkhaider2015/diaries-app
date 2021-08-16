@@ -39,10 +39,14 @@ export interface AuthState {
     error : string | null
     data : User | null
 } 
+
+type TDiaries = {
+    diaries : Diary[]
+}
 export interface IDiaries {
     loading : boolean
     error : string | null
-    data : Diary | null | { diaries : Diary[] }
+    data : TDiaries
 }
 
 interface RequestAction {

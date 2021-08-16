@@ -9,7 +9,9 @@ export const initialAuthState:AuthState = {
 export const initialDiariesState: IDiaries = {
     loading : false,
     error : null,
-    data : null
+    data : {
+        diaries : []
+    }
 }
 
 export const SignupReducer = (state:AuthState=initialAuthState, action:AuthAction) => {
@@ -84,7 +86,7 @@ export const DataReducer = (state:IDiaries=initialDiariesState, action:DataReduc
             state = {
                 loading : true,
                 error : null,
-                data : null
+                data : {diaries : []}
             }
             return state;
         case DataStrings.SUCCESS:
@@ -98,7 +100,7 @@ export const DataReducer = (state:IDiaries=initialDiariesState, action:DataReduc
             state = {
                 loading : false,
                 error : action.payload,
-                data : null
+                data : {diaries : []}
             }
             return state;
         default:

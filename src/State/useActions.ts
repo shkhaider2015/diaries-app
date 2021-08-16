@@ -5,11 +5,12 @@ import * as actionCreator from "./Actions";
 export const useAction = () =>
 {
     const dispatch = useDispatch();
-    const { Signup, Login, GetData } = bindActionCreators(actionCreator, dispatch);
+    const { Signup, Login, GetData, GetEntries } = bindActionCreators(actionCreator, dispatch);
 
     return {
         Signup,
         Login,
-        GetData
+        GetData,
+        GetEntries
     }
 }

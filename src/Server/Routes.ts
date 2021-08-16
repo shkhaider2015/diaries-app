@@ -50,3 +50,7 @@ export const GETUSERDIARIES = (schema:any, request:any) => {
 export const GETALLDIARIES = (schema:any, request:any) => {
     return schema.diaries.all()
 }
+
+export const GETALLENTRIES = (schema:any, request:any) => {
+    return schema.entries.all()
+}

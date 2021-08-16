@@ -1,6 +1,10 @@
 import { FC } from "react";
 import { Card } from "react-bootstrap";
+import { IEntry } from "../../State/Types";
 
+type propType = {
+    entry : IEntry
+}
 
 export const DiaryCard1: FC = () => {
 
@@ -18,16 +22,15 @@ export const DiaryCard1: FC = () => {
     </Card>
 }
 
-export const DiaryCard: FC = () => {
+export const DiaryCard = ({entry}:propType) => {
 
 
     return <div style={{ width : '13rem', height : '10rem' }} className="shadow p-2 mt-3 rounded" >
         <div className="d-flex flex-direction-row justify-content-between border" >
-            <p>Title</p> <p>icon</p>
+            <p> {entry.title} </p> <p> {new Date(entry.date).getFullYear()} </p>
         </div>
         <p>
-            Some quick example text to build on the card title and make up the bulk of
-            the card's content.
+            {entry.desc}
         </p>
     </div>
 }

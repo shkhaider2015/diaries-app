@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
-import { AuthAction, AuthState, DataReducerAction, HardcodeString, LogoutAction, SignupStrings, DataStrings, IDiaries } from "./Types";
+import { AuthAction, AuthState, 
+    DataReducerAction, HardcodeString, LogoutAction, SignupStrings, DataStrings,
+     IDiaries, EntryAuth, EntryReducerAction, EntriesStrings, IEntry } from "./Types";
 
 export const initialAuthState:AuthState = {
     loading : false,
@@ -12,6 +14,13 @@ export const initialDiariesState: IDiaries = {
     data : {
         diaries : []
     }
+}
+
+export const initialEntryState:EntryAuth = {
+    loading : false,
+    error : null,
+    data : {entries : []}
+    
 }
 
 export const SignupReducer = (state:AuthState=initialAuthState, action:AuthAction) => {
@@ -108,9 +117,43 @@ export const DataReducer = (state:IDiaries=initialDiariesState, action:DataReduc
     }
 }
 
+export const EntriesReducer = (state:EntryAuth=initialEntryState, action:EntryReducerAction) => {
+
+    switch (action.type) 
+    {
+        case EntriesStrings.REQUEST:
+            state = {
+                loading : true,
+                error : null,
+                data : {
+                    entries : []
+                }
+            }
+            return state
+        case EntriesStrings.SUCCESS:
+            state = {
+                loading : false,
+                error : null,
+                data : action.payload
+            }
+            return state
+        case EntriesStrings.FAILURE:
+            state = {
+                loading : false,
+                error : action.payload,
+                data : {
+                    entries : []
+                }
+            }
+            return state
+        default:
+            return state
+    }
+}
 
 export const Reducers = combineReducers({
     SignupReducer : SignupReducer,
     LoginReducer,
-    Diaries : DataReducer
+    Diaries : DataReducer,
+    Entries : EntriesReducer,
 })

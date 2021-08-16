@@ -35,38 +35,12 @@ export const Landing = () => {
 
     return <div className="row" >
         <div className="col-2 border" >
-            {/* {
-                diaries.loading
-                ? waitComp(true)
-                : null
-            }
-            {
-                 diaries.error
-                 ? waitComp(false,diaries.error)
-                 : null
-            } */}
             {
                 diaries.data
                 ? diaries.data.diaries ? diaries.data.diaries.map((item:any, index:number) => <div key={index} > <span> {item.title} </span> </div> ) : <span>No Diaries</span>
                 : diaries.loading ? waitComp(true, '') : waitComp(false, 'Error Fetching data')
             }
-            {
-                [0, 1, 2, 3, 4]
-                    .map(
-                        (object: number, index: number) => <div key={index} > <span> Diary </span> </div>
-                    )
-            }
         </div>
-        {/* <div className="col-10" >
-            <div className="row" >
-                {
-                    [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-                        .map(
-                            (object: number, index: number) => <div key={index} className="col-4" > <DiaryCard /> </div>
-                        )
-                }
-            </div>
-        </div> */}
         <div className="col-10">
             <Outlet />
         </div>

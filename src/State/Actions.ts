@@ -1,6 +1,6 @@
 import axios from "axios"
 import { Dispatch } from "redux";
-import { AuthAction, DataReducerAction, DataStrings, HardcodeString, LogoutAction, SignupStrings, User } from "./Types";
+import { AuthAction, DataReducerAction, DataStrings, EntriesStrings, EntryReducerAction, HardcodeString, IEntry, LogoutAction, SignupStrings, TEntry, User } from "./Types";
 
 
 export const Login = (user: User, login: boolean = true) => {
@@ -29,7 +29,7 @@ export const Login = (user: User, login: boolean = true) => {
 
             const jsonData = await response.data
 
-        console.log("login response status ", response.status)
+        console.log("login response status ", jsonData)
 
         return dispatch({
             type: HardcodeString.SUCCESS,
@@ -106,4 +106,31 @@ export const GetData = (user: User | null = null) => {
             }
     }
 }
+
+export const GetEntries = (user:User | null = null) => {
+    return async (dispatch:Dispatch<EntryReducerAction>) => {
+        dispatch({
+            type : EntriesStrings.REQUEST
+        })
+
+        try {
+            const response = await axios.get(user ? "/api/users" : "/api/entries" );
+            const resData:TEntry = await response.data;
+            
+
+            console.log("Entry action call ", resData.entries)
+
+            return dispatch({
+                type : EntriesStrings.SUCCESS,
+                payload : resData
+            })
+            
+        } catch (error) {
+            return dispatch({
+                type : EntriesStrings.FAILURE,
+                payload : "Cant find entries"
+            })
+        }
+}
+} 
 
